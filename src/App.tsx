@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Counter } from "./features/counter/Counter";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+import { store } from "@/app/store";
+import { Provider } from "react-redux";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { useEffect } from "react";
+import { appActions } from "@/features/app/app.slice";
+import { SignUp } from "@/components/SignUp/SignUp";
 
-function App() {
-  const [count, setCount] = useState(0)
+export const Test = () => {
+  const isLoading = useAppSelector((state) => state.app.isLoading);
+  const error = useAppSelector((state) => state.app.error);
+  const dispatch = useAppDispatch();
 
+  function handleErrorButtonClicked() {
+    dispatch(appActions.setError({ error: "new error" }));
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(appActions.setIsLoading({ isLoading: false }));
+    }, 3000);
+  }, [dispatch]);
+
+  if (isLoading) return <div>loading...</div>;
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <button onClick={handleErrorButtonClicked}>create error</button>
+      {!!error && <h2>{error}</h2>}
+      <Counter />
+    </div>
+  );
+};
+
+const router = createBrowserRouter([
+  {
+    element: <Test />,
+    path: "/",
+  },
+  {
+    element: <SignUp />,
+    path: "/sign-up",
+  },
+]);
+
+const theme = createTheme();
+function App() {
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
+  );
 }
 
-export default App
+export default App;
