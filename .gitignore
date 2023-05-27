@@ -23,5 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
-src/.env.production
 src/.env.development
+src/.env.production
