@@ -1,4 +1,7 @@
 import axios, { AxiosResponse } from "axios";
+import { ArgRegisterType } from "@/api/auth.api";
+
+console.log(import.meta.env.VITE_BASE_API_URL);
 
 export const AuthInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API_URL + "auth/",
@@ -6,12 +9,10 @@ export const AuthInstance = axios.create({
 });
 
 export const authAPI = {
-  register(data: any) {
-    return AuthInstance.post<any, AxiosResponse<any>, any>("register", data);
+  register(data: ArgRegisterType) {
+    return AuthInstance.post("register", data);
   },
-};
-
-export type LoginType = {
-  email: string;
-  password: string;
+  login(data: any) {
+    return AuthInstance.post("login", data);
+  },
 };

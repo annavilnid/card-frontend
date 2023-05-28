@@ -6,8 +6,14 @@ export const SignUp = () => {
   console.log("пробуем");
 
   const registerHandler = () => {
-    dispatch(authThunks.register("nya-admin@nya.nya", "1"));
+    //TODO
+    const payload = {
+      email: "test_ya@yandex.ru",
+      password: "12345678",
+    };
+    dispatch(authThunks.register(payload));
   };
+  //dispatch(appActions.setIsLoading({ isLoading: false }));
 
   return (
     <div>
