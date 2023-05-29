@@ -44,10 +44,10 @@ const router = createBrowserRouter([
     element: <SignUp />,
     path: "/sign-up",
   },
-  {
-    element: <SignIn />,
-    path: "/sign-in",
-  },
+  // {
+  //   element: <SignIn />,
+  //   path: "/sign-in",
+  // },
 ]);
 
 const theme = createTheme();

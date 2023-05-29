@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { ArgRegisterType } from "@/api/auth.api";
+import { ArgLoginType, ArgRegisterType, RegisterResponseType, LoginResponseType } from "@/api/auth.api";
 
 console.log(import.meta.env.VITE_BASE_API_URL);
 
@@ -10,9 +10,12 @@ export const AuthInstance = axios.create({
 
 export const authAPI = {
   register(data: ArgRegisterType) {
-    return AuthInstance.post("register", data);
+    return AuthInstance.post<RegisterResponseType, AxiosResponse<RegisterResponseType>, ArgRegisterType>(
+      "register",
+      data
+    );
   },
   login(data: any) {
-    return AuthInstance.post("login", data);
+    return AuthInstance.post<LoginResponseType, AxiosResponse<LoginResponseType>, ArgLoginType>("login", data);
   },
 };
